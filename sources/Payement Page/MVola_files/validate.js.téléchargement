@@ -1,0 +1,97 @@
+// JavaScript Document
+function checkTelmaPhoneNumber(inputID){
+    var phoneno = /^\d{10}$/;
+    var value =  document.getElementById(inputID).value;
+   if(
+        value.match(phoneno)
+        && value.length==10
+        && value.slice(0,3)=='034'
+    ){
+     //if number is valid
+      return true;
+   } else{
+      //if number is not valid. Handle error message before return false
+      var error_message = "Veuillez remplir correctement ce champ par votre num&eacute;ro TELMA (034 + 7 chiffres)";
+      /*if(value.match(phoneno) && value.length==10 && value.slice(0,3)!='034')
+        error_message = "Votre num&eacute;ro doit commencer par 034";*/
+      $("#"+inputID).parent(".border-formulaire").next().after('<span class="error">'+error_message+'</span>');
+      return false;
+   }
+}
+
+function checkCaptcha(inputID){
+    var captcha = $("#"+inputID).val();
+    if( captcha != '' ){
+     //if captcha is valid
+      return true;
+   } else{
+     //if captcha is not valid. Handle error message before return false
+      var error_message = "Veuillez saisir le captcha";
+      $("#"+inputID).parent(".border-formulaire").next().after('<span class="error">'+error_message+'</span>');
+      return false;
+   }
+}
+
+function preValidateData(formID){
+    //Init input ID
+    var phone_numberID = "phone-number";
+    var input_captchaID = "CaptchaForm_text";
+
+    //Clear old error message
+    $("span.error").remove();
+
+    //Validate All input
+   if(
+        checkTelmaPhoneNumber(phone_numberID)
+    ){
+      //If all is valid. Here Send request and get response status
+      //$('#response').fadeOut().load('status-template.html',null,function(){$('#response').fadeIn();});
+       var captcha = $($("input[name=captcha]")).val(),
+       tel = $('#tel').val();
+
+       if(checkCaptcha(input_captchaID)) {
+           sendAjaxRequest();
+       }
+
+   }
+}
+function reloadCaptcha()
+{
+    if(typeof(captchaImgUrl) === 'undefined') {
+        captchaImgUrl = document.getElementById("captcha_img").src;
+    }
+    var date = new Date();
+    document.getElementById("captcha_img").src = captchaImgUrl+ "?"+date.getTime();
+}
+function sendAjaxRequest(){
+    var response = $("#CaptchaForm_text").val();
+    var token = $("#CaptchaForm__token").val();
+
+    var dataString = 'CaptchaForm[text]=' + response + '&CaptchaForm[_token]=' + token ;
+    //console.log(dataString);
+    var url = $("#data-holder").attr("data-check-captcha-path");
+
+    $.ajax({
+        type: "POST",
+        url:  url,
+        data: dataString
+    }).done(function( response ) {
+        if(response.iError == 0)
+        {
+           $('.toremove').remove();
+           $("#transactionFrm").submit();
+        } else
+        {
+            //Clear old error message
+            $("span.error").remove();
+            var error_message = "Veuillez réessayer le captcha";
+            $("#CaptchaForm_text").parent(".border-formulaire").next().after('<span class="error">'+error_message+'</span>');
+
+            reloadCaptcha();
+        }
+    });
+}
+
+$("#btnValidate").live('click', function(){
+    preValidateData();
+});
