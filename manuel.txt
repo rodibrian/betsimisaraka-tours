@@ -1,0 +1,45 @@
+===================================================
+      MANUEL D’UTILISATION – BETSIMISARAKA TOURS
+===================================================
+
+1. INFORMATIONS GÉNÉRALES
+--------------------------
+Nom de l’application : Betsimisaraka Tours
+Version : v1.0
+Développé par : Kalia Perspective
+Description :
+ Ce site web est une vitrine touristique. Il présente les services
+et circuits proposés par l’agence Betsimisaraka Tours. Il inclut des
+sections informatives, un portfolio des voyages, les tarifs, les équipes
+et un formulaire de contact.
+
+2. INSTALLATION
+--------------------------
+1. Copier le dossier du projet dans le répertoire du serveur local
+   (exemple : htdocs pour XAMPP ou www pour WAMP).
+2. Démarrer Apache (et MySQL si nécessaire).
+3. Dans un navigateur, taper :
+   http://localhost/betsimisaraka
+
+3. UTILISATION
+--------------------------
+- Accueil : Présente l’agence et son slogan.
+- À propos : Informations générales et biographie.
+- Services : Liste des services proposés.
+- Voyages/Portfolio : Présentation des circuits organisés par région.
+- Tarifs : Détails des formules Standard, Réservation, VIP.
+- Équipes : Présentation de l’équipe.
+- Contact : Formulaire de contact + carte Google Maps intégrée.
+
+Astuce : Cliquez sur les encadrés (section *Why Us*) pour ouvrir une
+fenêtre popup avec plus d’informations.
+
+4. PERSONNALISATION
+--------------------------
+- Modifier les textes dans les fichiers HTML/PHP.
+- Les images se trouvent dans le dossier : assets/img/
+- Les styles sont définis dans : assets/css/style.css
+- Le formulaire de contact utilise `forms/contact.php` (adapter la
+  configuration pour que les emails fonctionnent).
+
+===================================================
